@@ -11,16 +11,138 @@
 <meta property="article:author" content="whaleghost">
 <meta property="article:tag" content="Compiler Design">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Principles of Compiler Design",
+  "url": "https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/",
+  "image": "https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg",
+  "datePublished": "2024-05-12T14:54:57.000Z",
+  "dateModified": "2024-07-18T10:25:41.678Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "whaleghost",
+      "url": "https://www.khalifa7410.top/about/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: undefined,
   translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":250},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
     success: '复制成功',
-    error: '复制错误',
+    error: '复制失败',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
@@ -36,16 +158,14 @@
     month: '个月前'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://gcore.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://gcore.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
-  islazyload: false,
+  islazyloadPlugin: false,
   isAnchor: false,
   percent: {
     toc: true,
@@ -54,138 +174,15 @@
   autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Principles of Compiler Design',
-  isPost: true,
-  isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-07-18 18:25:41'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-          if (t === undefined) {
-            if (isLightMode) activateLightMode()
-            else if (isDarkMode) activateDarkMode()
-            else if (isNotSpecified || hasNoSupport) {
-              const now = new Date()
-              const hour = now.getHours()
-              const isNight = hour <= 8 || hour >= 22
-              isNight ? activateDarkMode() : activateLightMode()
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-              if (saveToLocal.get('theme') === undefined) {
-                e.matches ? activateDarkMode() : activateLightMode()
-              }
-            })
-          } else if (t === 'light') activateLightMode()
-          else activateDarkMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
   const $loadingBox = document.getElementById('loading-box')
   const $body = document.body
   const preloader = {
     endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
       $body.style.overflow = ''
       $loadingBox.classList.add('loaded')
     },
@@ -196,13 +193,21 @@
   }
 
   preloader.initLoading()
-  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
 
   if (true) {
-    document.addEventListener('pjax:send', () => { preloader.initLoading() })
-    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
   }
-})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="whaleghostの小窝"><span class="site-name">whaleghostの小窝</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Principles of Compiler Design</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-18T10:25:41.678Z" title="更新于 2024-07-18 18:25:41">2024-07-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%83%A8%E9%95%BF%E8%87%AA%E7%94%A8/">部长自用</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Principles of Compiler Design"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="引论"><a href="#引论" class="headerlink" title="引论"></a>引论</h1><h2 id="编译器与解释器"><a href="#编译器与解释器" class="headerlink" title="编译器与解释器"></a>编译器与解释器</h2><h3 id="编译器（C-C-）"><a href="#编译器（C-C-）" class="headerlink" title="编译器（C/C++）"></a>编译器（C/C++）</h3><ul>
+})()</script><div class="bg-animation" id="web_bg" style="background-image: url(/url(https:/s1.imagehub.cc/images/2023/08/11/wallhaven-p8ld1j.jpeg));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">whaleghostの小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">Principles of Compiler Design</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Principles of Compiler Design</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-18T10:25:41.678Z" title="更新于 2024-07-18 18:25:41">2024-07-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%83%A8%E9%95%BF%E8%87%AA%E7%94%A8/">部长自用</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="引论"><a href="#引论" class="headerlink" title="引论"></a>引论</h1><h2 id="编译器与解释器"><a href="#编译器与解释器" class="headerlink" title="编译器与解释器"></a>编译器与解释器</h2><h3 id="编译器（C-C-）"><a href="#编译器（C-C-）" class="headerlink" title="编译器（C/C++）"></a>编译器（C/C++）</h3><ul>
 <li>读入某种语言（源语言）编写的程序</li>
 <li>直接输出另一种语言（目标语言）编写的程序</li>
 <li>通常目标程序可执行</li>
@@ -721,105 +726,75 @@ M = ( Σ , S , {q}_{0} , F , δ )</script><div class="table-container">
 <p>从语法分析树的<strong>根部</strong>开始构造语法分析树。</p>
 <h3 id="自顶向下语法分析器-1"><a href="#自顶向下语法分析器-1" class="headerlink" title="自顶向下语法分析器"></a>自顶向下语法分析器</h3><p>通常用于处理LR文法。</p>
 <p>从语法分析树的<strong>叶子</strong>开始构造语法分析树。</p>
-<h2 id="上下文无关文法（CFG）"><a href="#上下文无关文法（CFG）" class="headerlink" title="上下文无关文法（CFG）"></a>上下文无关文法（CFG）</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.khalifa7410.top/about/">whaleghost</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/">https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://khalifa7410.top" target="_blank">whaleghostの小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Compiler-Design/">Compiler Design</a></div><div class="post_share"><div class="social-share" data-image="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">金融、投资与保险杂谈</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++可变参数列表</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">whaleghost</div><div class="author-info__description">Talk is cheap, show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/whaleghost"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/whaleghost" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1725346207@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/288520602" target="_blank" title=""><i class="fab fa-bilibili"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-weixin"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在PC端浏览以获得更佳体验。需要咨询C++项目经验的请加V: whaleghost。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">引论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%8E%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">编译器与解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88C-C-%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">编译器（C&#x2F;C++）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%EF%BC%88Python-Java%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">解释器（Python&#x2F;Java）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">编译器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%EF%BC%88%E5%88%86%E6%9E%90%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">前端（分析部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%EF%BC%88%E7%BB%BC%E5%90%88%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">后端（综合部分）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">编译器工作步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD"><span class="toc-number">3.1.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83-token"><span class="toc-number">3.2.</span> <span class="toc-text">词法单元(token)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F-pattern"><span class="toc-number">3.3.</span> <span class="toc-text">模式(pattern)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E7%B4%A0-lexeme"><span class="toc-number">3.4.</span> <span class="toc-text">词素(lexeme)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token%E7%9A%84%E8%A7%84%E7%BA%A6"><span class="toc-number">3.5.</span> <span class="toc-text">token的规约</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">3.5.1.</span> <span class="toc-text">语言的运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex%E4%BB%A3%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">3.5.2.</span> <span class="toc-text">regex代数定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.5.3.</span> <span class="toc-text">regex扩展运算符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.</span> <span class="toc-text">token的识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-number">3.6.1.</span> <span class="toc-text">状态转换图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE%E5%88%B0%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">3.6.2.</span> <span class="toc-text">从状态转换图到词法分析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E5%AD%97%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.3.</span> <span class="toc-text">保留字的识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.4.</span> <span class="toc-text">多模式下的识别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-number">3.7.</span> <span class="toc-text">有穷自动机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88NFA%EF%BC%89"><span class="toc-number">3.7.1.</span> <span class="toc-text">不确定的有穷自动机（NFA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88DFA%EF%BC%89"><span class="toc-number">3.7.2.</span> <span class="toc-text">确定的有穷自动机（DFA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex-gt-NFA%EF%BC%88Thompson%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.3.</span> <span class="toc-text">regex &#x3D;&gt; NFA（Thompson算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFA-gt-DFA%EF%BC%88%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.4.</span> <span class="toc-text">NFA &#x3D;&gt; DFA（子集构造算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFA-gt-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E4%BB%A3%E7%A0%81%EF%BC%88Hopcroft%E6%9C%80%E5%B0%8F%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.5.</span> <span class="toc-text">DFA &#x3D;&gt; 词法分析器代码（Hopcroft最小化算法）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">4.1.</span> <span class="toc-text">语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">4.1.1.</span> <span class="toc-text">自顶向下语法分析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8-1"><span class="toc-number">4.1.2.</span> <span class="toc-text">自顶向下语法分析器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%EF%BC%88CFG%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">上下文无关文法（CFG）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++高性能无锁并发编程"/></a><div class="content"><a class="title" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程">C++高性能无锁并发编程</a><time datetime="2024-07-05T15:27:36.000Z" title="发表于 2024-07-05 23:27:36">2024-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="金融、投资与保险杂谈"/></a><div class="content"><a class="title" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈">金融、投资与保险杂谈</a><time datetime="2024-06-03T06:24:58.000Z" title="发表于 2024-06-03 14:24:58">2024-06-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Principles of Compiler Design"/></a><div class="content"><a class="title" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design">Principles of Compiler Design</a><time datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++可变参数列表"/></a><div class="content"><a class="title" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表">C++可变参数列表</a><time datetime="2024-05-11T02:09:57.000Z" title="发表于 2024-05-11 10:09:57">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/19/std-move/" title="std::move"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="std::move"/></a><div class="content"><a class="title" href="/2024/04/19/std-move/" title="std::move">std::move</a><time datetime="2024-04-19T09:08:45.000Z" title="发表于 2024-04-19 17:08:45">2024-04-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By whaleghost</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://gcore.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
-  window.MathJax = {
-    tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],
-      tags: 'ams'
-    },
-    chtml: {
-      scale: 1.1
-    },
-    options: {
-      renderActions: {
-        findScript: [10, doc => {
-          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-            const display = !!node.type.match(/; *mode=display/)
-            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
-            const text = document.createTextNode('')
-            node.parentNode.replaceChild(text, node)
-            math.start = {node: text, delim: '', n: 0}
-            math.end = {node: text, delim: '', n: 0}
-            doc.math.push(math)
-          }
-        }, '']
-      }
-    }
-  }
-  
-  const script = document.createElement('script')
-  script.src = 'https://gcore.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
-  script.id = 'MathJax-script'
-  script.async = true
-  document.head.appendChild(script)
-} else {
-  MathJax.startup.document.state(0)
-  MathJax.texReset()
-  MathJax.typesetPromise()
-}</script></div><div class="aplayer no-destroy" data-id="8666910369" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> </div><script id="click-show-text" src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="SEE,YOU,TOMORROW" data-fontsize="25px" data-random="false" async="async"></script><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://gcore.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
+<h2 id="上下文无关文法（CFG）"><a href="#上下文无关文法（CFG）" class="headerlink" title="上下文无关文法（CFG）"></a>上下文无关文法（CFG）</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.khalifa7410.top/about/">whaleghost</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/">https://khalifa7410.top/2024/05/12/Principles-of-Compiler-Design/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://khalifa7410.top" target="_blank">whaleghostの小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Compiler-Design/">Compiler Design</a></div><div class="post-share"><div class="social-share" data-image="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">金融、投资与保险杂谈</div></div><div class="info-2"><div class="info-item-1">软件工程与金融学的学科交叉</div></div></div></a><a class="pagination-related" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">C++可变参数列表</div></div><div class="info-2"><div class="info-item-1">C++形参包与省略号...与折叠表达式</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">whaleghost</div><div class="author-info-description">Talk is cheap, show me the code.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/whaleghost"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/whaleghost" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1725346207@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/288520602" target="_blank" title=""><i class="fab fa-bilibili"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-weixin"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在PC端浏览以获得更佳体验。需要咨询C++项目经验的请加V: whaleghost。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">引论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%8E%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">编译器与解释器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%88C-C-%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">编译器（C&#x2F;C++）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%EF%BC%88Python-Java%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">解释器（Python&#x2F;Java）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">编译器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%EF%BC%88%E5%88%86%E6%9E%90%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">前端（分析部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%EF%BC%88%E7%BB%BC%E5%90%88%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">后端（综合部分）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E5%B7%A5%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.</span> <span class="toc-text">编译器工作步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD"><span class="toc-number">3.1.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83-token"><span class="toc-number">3.2.</span> <span class="toc-text">词法单元(token)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F-pattern"><span class="toc-number">3.3.</span> <span class="toc-text">模式(pattern)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E7%B4%A0-lexeme"><span class="toc-number">3.4.</span> <span class="toc-text">词素(lexeme)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token%E7%9A%84%E8%A7%84%E7%BA%A6"><span class="toc-number">3.5.</span> <span class="toc-text">token的规约</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">3.5.1.</span> <span class="toc-text">语言的运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex%E4%BB%A3%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-number">3.5.2.</span> <span class="toc-text">regex代数定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">3.5.3.</span> <span class="toc-text">regex扩展运算符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.</span> <span class="toc-text">token的识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-number">3.6.1.</span> <span class="toc-text">状态转换图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE%E5%88%B0%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">3.6.2.</span> <span class="toc-text">从状态转换图到词法分析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E5%AD%97%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.3.</span> <span class="toc-text">保留字的识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">3.6.4.</span> <span class="toc-text">多模式下的识别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-number">3.7.</span> <span class="toc-text">有穷自动机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88NFA%EF%BC%89"><span class="toc-number">3.7.1.</span> <span class="toc-text">不确定的有穷自动机（NFA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E5%AE%9A%E7%9A%84%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88DFA%EF%BC%89"><span class="toc-number">3.7.2.</span> <span class="toc-text">确定的有穷自动机（DFA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regex-gt-NFA%EF%BC%88Thompson%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.3.</span> <span class="toc-text">regex &#x3D;&gt; NFA（Thompson算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NFA-gt-DFA%EF%BC%88%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.4.</span> <span class="toc-text">NFA &#x3D;&gt; DFA（子集构造算法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFA-gt-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E4%BB%A3%E7%A0%81%EF%BC%88Hopcroft%E6%9C%80%E5%B0%8F%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">3.7.5.</span> <span class="toc-text">DFA &#x3D;&gt; 词法分析器代码（Hopcroft最小化算法）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">4.1.</span> <span class="toc-text">语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-number">4.1.1.</span> <span class="toc-text">自顶向下语法分析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8-1"><span class="toc-number">4.1.2.</span> <span class="toc-text">自顶向下语法分析器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%EF%BC%88CFG%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">上下文无关文法（CFG）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计"><img src="https://s1.imagehub.cc/images/2026/03/27/9b45da28f0429724b330624d6fc8249f.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CPA-会计"/></a><div class="content"><a class="title" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计">CPA-会计</a><time datetime="2026-03-27T05:19:22.000Z" title="发表于 2026-03-27 13:19:22">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++高性能无锁并发编程"/></a><div class="content"><a class="title" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程">C++高性能无锁并发编程</a><time datetime="2024-07-05T15:27:36.000Z" title="发表于 2024-07-05 23:27:36">2024-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="金融、投资与保险杂谈"/></a><div class="content"><a class="title" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈">金融、投资与保险杂谈</a><time datetime="2024-06-03T06:24:58.000Z" title="发表于 2024-06-03 14:24:58">2024-06-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Principles of Compiler Design"/></a><div class="content"><a class="title" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design">Principles of Compiler Design</a><time datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++可变参数列表"/></a><div class="content"><a class="title" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表">C++可变参数列表</a><time datetime="2024-05-11T02:09:57.000Z" title="发表于 2024-05-11 10:09:57">2024-05-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By whaleghost</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8666910369" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
       }
     }
   }
 
-  typeof typed === 'object' && typed.destroy()
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

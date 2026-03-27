@@ -11,16 +11,138 @@
 <meta property="article:author" content="whaleghost">
 <meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalifa7410.top/2023/07/14/Code/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Code",
+  "url": "https://khalifa7410.top/2023/07/14/Code/",
+  "image": "https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg",
+  "datePublished": "2023-07-14T06:47:10.000Z",
+  "dateModified": "2023-08-11T01:26:05.843Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "whaleghost",
+      "url": "https://www.khalifa7410.top/about/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://khalifa7410.top/2023/07/14/Code/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: undefined,
   translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":250},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
     success: '复制成功',
-    error: '复制错误',
+    error: '复制失败',
     noSupport: '浏览器不支持'
   },
   relativeDate: {
@@ -36,16 +158,14 @@
     month: '个月前'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://gcore.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://gcore.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
-  islazyload: false,
+  islazyloadPlugin: false,
   isAnchor: false,
   percent: {
     toc: true,
@@ -54,138 +174,15 @@
   autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Code',
-  isPost: true,
-  isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-08-11 09:26:05'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-
-          if (t === undefined) {
-            if (isLightMode) activateLightMode()
-            else if (isDarkMode) activateDarkMode()
-            else if (isNotSpecified || hasNoSupport) {
-              const now = new Date()
-              const hour = now.getHours()
-              const isNight = hour <= 8 || hour >= 22
-              isNight ? activateDarkMode() : activateLightMode()
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-              if (saveToLocal.get('theme') === undefined) {
-                e.matches ? activateDarkMode() : activateLightMode()
-              }
-            })
-          } else if (t === 'light') activateLightMode()
-          else activateDarkMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
   const $loadingBox = document.getElementById('loading-box')
   const $body = document.body
   const preloader = {
     endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
       $body.style.overflow = ''
       $loadingBox.classList.add('loaded')
     },
@@ -196,13 +193,21 @@
   }
 
   preloader.initLoading()
-  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
 
   if (true) {
-    document.addEventListener('pjax:send', () => { preloader.initLoading() })
-    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
   }
-})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="whaleghostの小窝"><span class="site-name">whaleghostの小窝</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Code</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-14T06:47:10.000Z" title="发表于 2023-07-14 14:47:10">2023-07-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-11T01:26:05.843Z" title="更新于 2023-08-11 09:26:05">2023-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%B9%E8%AE%AD%E6%96%87%E4%BB%B6/">培训文件</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">785</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Code"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="培训源码2023-x2F-7-x2F-15"><a href="#培训源码2023-x2F-7-x2F-15" class="headerlink" title="培训源码2023&#x2F;7&#x2F;15"></a>培训源码2023&#x2F;7&#x2F;15</h2><span id="more"></span>
+})()</script><div class="bg-animation" id="web_bg" style="background-image: url(/url(https:/s1.imagehub.cc/images/2023/08/11/wallhaven-p8ld1j.jpeg));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">whaleghostの小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">Code</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Code</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-14T06:47:10.000Z" title="发表于 2023-07-14 14:47:10">2023-07-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-11T01:26:05.843Z" title="更新于 2023-08-11 09:26:05">2023-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%B9%E8%AE%AD%E6%96%87%E4%BB%B6/">培训文件</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">785</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="培训源码2023-x2F-7-x2F-15"><a href="#培训源码2023-x2F-7-x2F-15" class="headerlink" title="培训源码2023&#x2F;7&#x2F;15"></a>培训源码2023&#x2F;7&#x2F;15</h2><span id="more"></span>
 
 <h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;body&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;selector&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">picker</span> @<span class="attr">change</span>=<span class="string">&quot;bindPickerChange&quot;</span> <span class="attr">:value</span>=<span class="string">&quot;index&quot;</span> <span class="attr">:range</span>=<span class="string">&quot;subjectnum&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span>&gt;</span>请选择科目数量<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;picker&quot;</span>&gt;</span>当前选择：&#123;&#123;index&#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">picker</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;main&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;subjectinfo.length &gt; 0&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;head&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span>&gt;</span>科目<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span>&gt;</span>学分<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span>&gt;</span>成绩<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;form-cell&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;(item,index) in subjectinfo&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;name&quot;</span>&gt;</span>&#123;&#123;item.subject&#125;&#125;&#123;&#123;index+1&#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;credit&quot;</span> <span class="attr">type</span>=<span class="string">&quot;digit&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入学分&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;confirmCredit&quot;</span> <span class="attr">:data-index</span>=<span class="string">&quot;index&quot;</span>/&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;grade&quot;</span> <span class="attr">type</span>=<span class="string">&quot;digit&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;请输入成绩&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;confirmGrade&quot;</span> <span class="attr">:data-index</span>=<span class="string">&quot;index&quot;</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;result&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;subjectinfo.length &gt; 0&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;cal&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;cal&quot;</span>&gt;</span>计算<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">view</span>&gt;</span>您的绩点为:&#123;&#123;result&#125;&#125;<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -212,70 +217,75 @@
 
 <h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">	<span class="selector-class">.body</span> &#123;</span><br><span class="line">	  <span class="attribute">background</span>: <span class="number">#000000</span>;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	  <span class="attribute">position</span>: relative;</span><br><span class="line">	  <span class="attribute">min-height</span>: <span class="number">100vh</span>;</span><br><span class="line">	  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.selector</span> &#123;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	  <span class="attribute">justify-content</span>: center;</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">20</span>rpx;</span><br><span class="line">	  <span class="attribute">width</span>: <span class="number">40%</span>;</span><br><span class="line">	  <span class="attribute">margin-top</span>: <span class="number">30</span>rpx;</span><br><span class="line">	  <span class="attribute">color</span>: white;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.selector</span> view &#123;</span><br><span class="line">	  <span class="attribute">padding</span>: <span class="number">15</span>rpx;</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">15</span>rpx;</span><br><span class="line">	  <span class="attribute">border</span>: white solid <span class="number">4</span>rpx;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.main</span> &#123;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	  <span class="attribute">color</span>: white;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.head</span> &#123;</span><br><span class="line">	  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">20</span>rpx;</span><br><span class="line">	  <span class="attribute">margin-top</span>: <span class="number">30</span>rpx;</span><br><span class="line">	  <span class="attribute">height</span>: <span class="number">70</span>rpx;</span><br><span class="line">	  <span class="attribute">width</span>: <span class="number">90%</span>;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.form-cell</span> &#123;</span><br><span class="line">	  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">20</span>rpx;</span><br><span class="line">	  <span class="attribute">margin-top</span>: <span class="number">30</span>rpx;</span><br><span class="line">	  <span class="attribute">height</span>: <span class="number">70</span>rpx;</span><br><span class="line">	  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	  <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">	  <span class="attribute">width</span>: <span class="number">90%</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.name</span> &#123;</span><br><span class="line">	  <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">justify-content</span>: center;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.credit</span> &#123;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">justify-content</span>: center;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.grade</span> &#123;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">justify-content</span>: center;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.input-placeholder</span> &#123;</span><br><span class="line">	  <span class="attribute">color</span>: white;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.result</span> &#123;</span><br><span class="line">	  <span class="attribute">margin-top</span>: <span class="number">60</span>rpx;</span><br><span class="line">	  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">	  <span class="attribute">padding</span>: <span class="number">20</span>rpx;</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">20</span>rpx;</span><br><span class="line">	  <span class="attribute">font-size</span>: larger;</span><br><span class="line">	  <span class="attribute">color</span>: white;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">	  <span class="attribute">justify-content</span>: center;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="selector-class">.cal</span> &#123;</span><br><span class="line">	  <span class="attribute">color</span>: white;</span><br><span class="line">	  <span class="attribute">display</span>: flex;</span><br><span class="line">	  <span class="attribute">align-items</span>: center;</span><br><span class="line">	  <span class="attribute">padding-left</span>: <span class="number">70</span>rpx;</span><br><span class="line">	  <span class="attribute">padding-right</span>: <span class="number">70</span>rpx;</span><br><span class="line">	  <span class="attribute">padding-top</span>: <span class="number">10</span>rpx;</span><br><span class="line">	  <span class="attribute">padding-bottom</span>: <span class="number">10</span>rpx;</span><br><span class="line">	  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.1</span>);</span><br><span class="line">	  <span class="attribute">border-radius</span>: <span class="number">15</span>rpx;</span><br><span class="line">	  <span class="attribute">border</span>: white solid <span class="number">5</span>rpx;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
 
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.khalifa7410.top/about/">whaleghost</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://khalifa7410.top/2023/07/14/Code/">https://khalifa7410.top/2023/07/14/Code/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://khalifa7410.top" target="_blank">whaleghostの小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a></div><div class="post_share"><div class="social-share" data-image="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/15/office/" title="Office"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Office</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/12/JetBrains%E5%85%A8%E5%AE%B6%E6%A1%B6%E6%BF%80%E6%B4%BB%E5%B7%A5%E5%85%B7/" title="JetBrains全家桶激活工具"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JetBrains全家桶激活工具</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">whaleghost</div><div class="author-info__description">Talk is cheap, show me the code.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/whaleghost"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/whaleghost" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1725346207@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/288520602" target="_blank" title=""><i class="fab fa-bilibili"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-weixin"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在PC端浏览以获得更佳体验。需要咨询C++项目经验的请加V: whaleghost。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%B9%E8%AE%AD%E6%BA%90%E7%A0%812023-x2F-7-x2F-15"><span class="toc-number">1.</span> <span class="toc-text">培训源码2023&#x2F;7&#x2F;15</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML"><span class="toc-number">1.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript"><span class="toc-number">1.2.</span> <span class="toc-text">JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS"><span class="toc-number">1.3.</span> <span class="toc-text">CSS</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++高性能无锁并发编程"/></a><div class="content"><a class="title" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程">C++高性能无锁并发编程</a><time datetime="2024-07-05T15:27:36.000Z" title="发表于 2024-07-05 23:27:36">2024-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="金融、投资与保险杂谈"/></a><div class="content"><a class="title" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈">金融、投资与保险杂谈</a><time datetime="2024-06-03T06:24:58.000Z" title="发表于 2024-06-03 14:24:58">2024-06-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Principles of Compiler Design"/></a><div class="content"><a class="title" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design">Principles of Compiler Design</a><time datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++可变参数列表"/></a><div class="content"><a class="title" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表">C++可变参数列表</a><time datetime="2024-05-11T02:09:57.000Z" title="发表于 2024-05-11 10:09:57">2024-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/19/std-move/" title="std::move"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="std::move"/></a><div class="content"><a class="title" href="/2024/04/19/std-move/" title="std::move">std::move</a><time datetime="2024-04-19T09:08:45.000Z" title="发表于 2024-04-19 17:08:45">2024-04-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By whaleghost</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://gcore.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8666910369" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> </div><script id="click-show-text" src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="SEE,YOU,TOMORROW" data-fontsize="25px" data-random="false" async="async"></script><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://gcore.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://gcore.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.khalifa7410.top/about/">whaleghost</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://khalifa7410.top/2023/07/14/Code/">https://khalifa7410.top/2023/07/14/Code/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://khalifa7410.top" target="_blank">whaleghostの小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a></div><div class="post-share"><div class="social-share" data-image="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/07/15/office/" title="Office"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Office</div></div><div class="info-2"><div class="info-item-1">本帖适用于Office全家桶批量版的激活。 如果你购买的笔记本的包装盒上没有标注附带Office的信息，说明笔记本不带有Office激活信息，需要通过一些特殊手段来对Office进行激活。同样也适用于台式机Office的激活。 下载工具本帖所用的工具为Office Tool Plus，前往https://pan.baidu.com/s/1qSbWOlVUgfvTlpW_jLqAbw?pwd&#x3D;ythm进行下载。没有百度网盘会员又想不限速的请先移步至百度网盘不限速 | whaleghost的小窝。 下载完毕后进行解压得到文件夹  进入Office Tool文件夹，运行Office Tool Plus.exe（注意：若提示更新请忽略更新，否则会导致与本教程不匹配且大概率识别不到自带的.NET运行环境）。 卸载自带的Office（确定没有自带Office的请移至第3步）启动Office Tool Plus.exe后，进入工具箱界面（包括下文所提到的界面都是点击左上角的三条横杠以查看界面名称），选择移除Office并勾选清除激活状态，并开始，等待操作完成即可。  部署Office...</div></div></div></a><a class="pagination-related" href="/2023/07/12/JetBrains%E5%85%A8%E5%AE%B6%E6%A1%B6%E6%BF%80%E6%B4%BB%E5%B7%A5%E5%85%B7/" title="JetBrains全家桶激活工具"><img class="cover" src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">JetBrains全家桶激活工具</div></div><div class="info-2"><div class="info-item-1">本帖的工具适用于所有的JetBrains开发IDE，如CLion、IntelliJ IDEA、WebStorm、PyCharm等（最新产品Fleet除外）戳我下载工具   注意：由于工具属于破解脚本，请务必在安装时关闭所有杀毒软件（包括Microsoft Defender安全中心）以防误报毒被查杀也可将此工具添加为排除项  警告：本工具在进行教程的第3步后的文件路径不能再改变，否则会出现掉激活需要重新激活的清空 使用教程 首先下载工具，可与(百度网盘不限速 | whaleghost的小窝)配合使用，工具下载链接👉戳我下载工具 下载完毕后进行解压可得到 打开scripts文件夹如果是windows系统，直接运行install-current-user.vbs会弹出点击OK并耐心等待Done提示出现即可如果是MacOS直接运行install.sh，其他步骤同windows 打开你要激活的JetBrains开发IDE 点击Get license from:下的License sever，并将https://jetbra.in填入其中，最后点击Activate，若激活成功则此教程至此结...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">whaleghost</div><div class="author-info-description">Talk is cheap, show me the code.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">16</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/whaleghost"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/whaleghost" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1725346207@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/288520602" target="_blank" title=""><i class="fab fa-bilibili"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-weixin"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在PC端浏览以获得更佳体验。需要咨询C++项目经验的请加V: whaleghost。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%B9%E8%AE%AD%E6%BA%90%E7%A0%812023-x2F-7-x2F-15"><span class="toc-number">1.</span> <span class="toc-text">培训源码2023&#x2F;7&#x2F;15</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML"><span class="toc-number">1.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript"><span class="toc-number">1.2.</span> <span class="toc-text">JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS"><span class="toc-number">1.3.</span> <span class="toc-text">CSS</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计"><img src="https://s1.imagehub.cc/images/2026/03/27/9b45da28f0429724b330624d6fc8249f.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CPA-会计"/></a><div class="content"><a class="title" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计">CPA-会计</a><time datetime="2026-03-27T05:19:22.000Z" title="发表于 2026-03-27 13:19:22">2026-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++高性能无锁并发编程"/></a><div class="content"><a class="title" href="/2024/07/05/C-%E9%AB%98%E6%80%A7%E8%83%BD%E6%97%A0%E9%94%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="C++高性能无锁并发编程">C++高性能无锁并发编程</a><time datetime="2024-07-05T15:27:36.000Z" title="发表于 2024-07-05 23:27:36">2024-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="金融、投资与保险杂谈"/></a><div class="content"><a class="title" href="/2024/06/03/%E9%87%91%E8%9E%8D%E3%80%81%E6%8A%95%E8%B5%84%E4%B8%8E%E4%BF%9D%E9%99%A9%E6%9D%82%E8%B0%88/" title="金融、投资与保险杂谈">金融、投资与保险杂谈</a><time datetime="2024-06-03T06:24:58.000Z" title="发表于 2024-06-03 14:24:58">2024-06-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design"><img src="https://s1.imagehub.cc/images/2024/03/25/c35719f50ff1c9c9b321689bfea27eb1.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Principles of Compiler Design"/></a><div class="content"><a class="title" href="/2024/05/12/Principles-of-Compiler-Design/" title="Principles of Compiler Design">Principles of Compiler Design</a><time datetime="2024-05-12T14:54:57.000Z" title="发表于 2024-05-12 22:54:57">2024-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表"><img src="https://s1.imagehub.cc/images/2024/03/25/99de7d870958c9bdaf599d55b519f1e3.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++可变参数列表"/></a><div class="content"><a class="title" href="/2024/05/11/C-%E5%BD%A2%E5%8F%82%E5%8C%85/" title="C++可变参数列表">C++可变参数列表</a><time datetime="2024-05-11T02:09:57.000Z" title="发表于 2024-05-11 10:09:57">2024-05-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By whaleghost</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8666910369" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
       }
     }
   }
 
-  typeof typed === 'object' && typed.destroy()
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
 
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
