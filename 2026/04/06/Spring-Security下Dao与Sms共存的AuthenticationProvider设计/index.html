@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Spring Security下整合多种登录方式设计 | whaleghostの小窝</title><meta name="author" content="whaleghost"><meta name="copyright" content="whaleghost"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在Spring Security项目中，其提供的默认的DaoAuthenticationProvider（账号密码登录）往往不足以满足项目需求。 在比较复杂的项目中往往需要多种登录方式并存来进行验证和授权。 本文将以DaoAuthenticationProvider与SmsAuthenticationProvider共存的例子讲解Spring Security如何整合多种登录方式。  Sprin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security下整合多种登录方式设计">
+<meta property="og:url" content="https://khalifa7410.top/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="whaleghostの小窝">
+<meta property="og:description" content="在Spring Security项目中，其提供的默认的DaoAuthenticationProvider（账号密码登录）往往不足以满足项目需求。 在比较复杂的项目中往往需要多种登录方式并存来进行验证和授权。 本文将以DaoAuthenticationProvider与SmsAuthenticationProvider共存的例子讲解Spring Security如何整合多种登录方式。  Sprin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg">
+<meta property="article:published_time" content="2026-04-06T02:46:33.000Z">
+<meta property="article:modified_time" content="2026-04-06T04:00:34.850Z">
+<meta property="article:author" content="whaleghost">
+<meta property="article:tag" content="Spring Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Spring Security下整合多种登录方式设计",
+  "url": "https://khalifa7410.top/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/",
+  "image": "https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg",
+  "datePublished": "2026-04-06T02:46:33.000Z",
+  "dateModified": "2026-04-06T04:00:34.850Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "whaleghost",
+      "url": "https://www.khalifa7410.top/about/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://khalifa7410.top/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 8 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spring Security下整合多种登录方式设计',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div class="bg-animation" id="web_bg" style="background-image: url(/url(https:/s1.imagehub.cc/images/2023/08/11/wallhaven-p8ld1j.jpeg));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">whaleghostの小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">Spring Security下整合多种登录方式设计</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Spring Security下整合多种登录方式设计</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-06T02:46:33.000Z" title="发表于 2026-04-06 10:46:33">2026-04-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-06T04:00:34.850Z" title="更新于 2026-04-06 12:00:34">2026-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p>在Spring Security项目中，其提供的默认的DaoAuthenticationProvider（账号密码登录）往往不足以满足项目需求。</p>
+<p>在比较复杂的项目中往往需要多种登录方式并存来进行验证和授权。</p>
+<p>本文将以DaoAuthenticationProvider与SmsAuthenticationProvider共存的例子讲解Spring Security如何整合多种登录方式。</p>
+</blockquote>
+<h1 id="Spring-Security验证授权调用链"><a href="#Spring-Security验证授权调用链" class="headerlink" title="Spring Security验证授权调用链"></a>Spring Security验证授权调用链</h1><p>以DaoAuthenticationProvider为例，其验证授权调用链如下：</p>
+<p><img src="https://s1.imagehub.cc/images/2026/04/06/b4102f334914881e37ad1b7940d4bf10.png" alt="Spring Security Call Chain"></p>
+<p>不难发现若我们要实现短信验证码登录，需要实现<code>SmsAuthenticationToken</code>、<code>SmsAuthenticationProvider</code>、<code>SmsUserDetailsService</code>、<code>SmsUserDetails</code>。</p>
+<p>由<code>SmsAuthenticationProvider</code>调用<code>authenticate(Authentication)</code>方法，并在此方法中调用<code>SmsUserDetailsService</code>的<code>loadUserByUsername(String)</code>方法，返回<code>SmsUserDetails</code>。</p>
+<p>接下来我们由下而上实现整个链路。</p>
+<h1 id="SmsAuthService"><a href="#SmsAuthService" class="headerlink" title="SmsAuthService"></a>SmsAuthService</h1><blockquote>
+<p>这个类用于实现短信验证码状态管理以及验证码比对。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.core.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.RequiredArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmsAuthService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;app.main-body-name&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String mainBodyName;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> StringRedisTemplate verificationCodeRedisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendVerificationCode</span><span class="params">(String phoneNumber)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">verificationCode</span> <span class="operator">=</span> generateVerificationCode();</span><br><span class="line">        <span class="comment">// Todo: 调用短信服务</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> mainBodyName + <span class="string">&quot;:sms:code:&quot;</span> + phoneNumber;</span><br><span class="line">        verificationCodeRedisTemplate.opsForValue().set(</span><br><span class="line">                key, verificationCode, <span class="number">5</span>, TimeUnit.MINUTES</span><br><span class="line">        );</span><br><span class="line">        log.info(<span class="string">&quot;SmsAuthService: Code[&#123;&#125;] =&gt; phone[&#123;&#125;] has been sent.&quot;</span>, verificationCode, phoneNumber);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">verifyCode</span><span class="params">(String phoneNumber, String verificationCode)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> mainBodyName + <span class="string">&quot;:sms:code:&quot;</span> + phoneNumber;</span><br><span class="line">        <span class="type">String</span> <span class="variable">cache</span> <span class="operator">=</span> verificationCodeRedisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="keyword">if</span> (verificationCode.equals(cache)) &#123;</span><br><span class="line">            verificationCodeRedisTemplate.delete(key);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">generateVerificationCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.valueOf(<span class="keyword">new</span> <span class="title class_">Random</span>().nextInt(<span class="number">899999</span>) + <span class="number">100000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>装配<code>StringRedisTemplate</code>以实现短信验证码保存。</p>
+<p><code>generateVerificationCode()</code>方法用于生成6位随机验证码。</p>
+<p><code>sendVerificationCode(String phoneNumber)</code>方法用于调用云服务商的SMS服务并发送短信验证码，同时将发送的验证码载入Redis实现过期自动删除与存储。</p>
+<p><code>verifyCode(String phoneNumber, String verificationCode)</code>方法用于比对验证码是否存在并且正确。</p>
+<h1 id="SmsAuthenticationToken"><a href="#SmsAuthenticationToken" class="headerlink" title="SmsAuthenticationToken"></a>SmsAuthenticationToken</h1><blockquote>
+<p>这个类用于实现通行验证Token，类比<code>UsernamePasswordAuthenticationToken</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.core.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AbstractAuthenticationToken;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmsAuthenticationToken</span> <span class="keyword">extends</span> <span class="title class_">AbstractAuthenticationToken</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object principal;</span><br><span class="line">    <span class="keyword">private</span> Object credentials;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SmsAuthenticationToken</span><span class="params">(String phoneNumber, String verificationCode)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>((Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt;) <span class="literal">null</span>);</span><br><span class="line">        <span class="built_in">this</span>.principal = phoneNumber;</span><br><span class="line">        <span class="built_in">this</span>.credentials = verificationCode;</span><br><span class="line">        setAuthenticated(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SmsAuthenticationToken</span><span class="params">(</span></span><br><span class="line"><span class="params">            Object principal, Object credentials, Collection&lt;? extends GrantedAuthority&gt; authorities</span></span><br><span class="line"><span class="params">    )</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(authorities);</span><br><span class="line">        <span class="built_in">this</span>.principal = principal;</span><br><span class="line">        <span class="built_in">this</span>.credentials = credentials;</span><br><span class="line">        setAuthenticated(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构造方法<code>SmsAuthenticationToken(String phoneNumber, String verificationCode)</code>用于构造在登录时的验证Token，授权封装为空，交由后续处理，<code>principal</code>、<code>credentials</code>分别与与<code>phoneNumber</code>、<code>verificationCode</code>绑定。</p>
+<p>由于本系统的登录鉴权链路采用jwt方案设计，本项目的构造方法<code>SmsAuthenticationToken(Object principal, Object credentials, Collection&lt;? extends GrantedAuthority&gt; authorities)</code>用于构造用户在已登录系统并获得jwt后供<code>JwtAuthenticationFilter</code>过滤使用的Token，读者可以根据项目实际设计方案自行调整此构造方法。</p>
+<h1 id="SmsUserDetails"><a href="#SmsUserDetails" class="headerlink" title="SmsUserDetails"></a>SmsUserDetails</h1><blockquote>
+<p>此类用于构造用户信息以供后续授权使用。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.core.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.AllArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.NonNull;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.authority.SimpleGrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.pojo.entity.rbac.Permission;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.pojo.entity.rbac.Role;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmsUserDetails</span> <span class="keyword">implements</span> <span class="title class_">UserDetails</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String phoneNumber;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String verificationCode;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer currentStatus;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Role&gt; roles;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> SmsUserDetails <span class="title function_">create</span><span class="params">(</span></span><br><span class="line"><span class="params">            String phoneNumber, String verificationCode, Integer currentStatus, List&lt;Role&gt; roles</span></span><br><span class="line"><span class="params">    )</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">SmsUserDetails</span>(phoneNumber, verificationCode, currentStatus, roles);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;</span><br><span class="line">        Set&lt;GrantedAuthority&gt; authorities = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Role role : roles) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Permission permission : role.getPermissions()) &#123;</span><br><span class="line">                authorities.add(<span class="keyword">new</span> <span class="title class_">SimpleGrantedAuthority</span>(permission.getPermissionName()));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> authorities;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> verificationCode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getUsername</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> phoneNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEnabled</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> currentStatus == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>读者需要注意，只有<code>phoneNumber</code>、<code>verificationCode</code>、<code>roles</code>字段必须实现，其他字段为可选项，根据项目设计方案自行调整。</p>
+<p>由于本项目采用权限组方案，所以<code>Role</code>只负责整合<code>Permisson</code>，本身不作为权限进行使用，所以在<code>getAuthorities()</code>方法中并没有将<code>role</code>信息也载入至<code>authorities</code>。</p>
+<h1 id="SmsUserDetailsService"><a href="#SmsUserDetailsService" class="headerlink" title="SmsUserDetailsService"></a>SmsUserDetailsService</h1><blockquote>
+<p>这个类没有难点，它的职责有且只有将用户信息从数据库中带出。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.core.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.RequiredArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> org.jspecify.annotations.NonNull;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetailsService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.pojo.entity.rbac.Employee;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.pojo.entity.transaction.Customer;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.repository.CustomerRepo;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.core.repository.EmployeeRepo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmsUserDetailsService</span> <span class="keyword">implements</span> <span class="title class_">UserDetailsService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> CustomerRepo customerRepo;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> EmployeeRepo employeeRepo;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(<span class="meta">@NonNull</span> String phoneNumber)</span> <span class="keyword">throws</span> UsernameNotFoundException &#123;</span><br><span class="line">        <span class="type">Employee</span> <span class="variable">employee</span> <span class="operator">=</span> employeeRepo.findEmployeeByPhoneNumber(phoneNumber).orElse(<span class="literal">null</span>);</span><br><span class="line">        <span class="type">Customer</span> <span class="variable">customer</span> <span class="operator">=</span> customerRepo.findCustomerByPhoneNumber(phoneNumber).orElse(<span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (employee != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> SmsUserDetails.create(</span><br><span class="line">                    employee.getPhoneNumber(), <span class="literal">null</span>, employee.getCurrentStatus(), employee.getRoles()</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (customer != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> SmsUserDetails.create(</span><br><span class="line">                    customer.getPhoneNumber(), <span class="literal">null</span>, <span class="number">0</span>, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;()</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UsernameNotFoundException</span>(<span class="string">&quot;用户不存在&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>装配<code>CustomerRepo</code>、<code>EmployeeRepo</code>以查询用户信息。</p>
+<p>由于作者的项目SMS登录服务同时对后台和前台暴露，<code>loadUserByUsername(@NonNull String phoneNumber)</code>方法对数据库进行了两次查询，读者可以根据自己的项目实际情况调整，大致思路就是去数据库中查询用户信息并返回。</p>
+<h1 id="SmsAuthenticationProvider"><a href="#SmsAuthenticationProvider" class="headerlink" title="SmsAuthenticationProvider"></a>SmsAuthenticationProvider</h1><blockquote>
+<p>这个类用来截获SmsAuthenticationToken并进行验证授权。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.core.security;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.RequiredArgsConstructor;</span><br><span class="line"><span class="keyword">import</span> org.jspecify.annotations.NonNull;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.BadCredentialsException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.AuthenticationException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SmsAuthenticationProvider</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationProvider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SmsUserDetailsService smsUserDetailsService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SmsAuthService smsAuthService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Authentication <span class="title function_">authenticate</span><span class="params">(<span class="meta">@NonNull</span> Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">        <span class="type">SmsAuthenticationToken</span> <span class="variable">smsAuth</span> <span class="operator">=</span> (SmsAuthenticationToken) authentication;</span><br><span class="line">        <span class="type">String</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> (String) smsAuth.getPrincipal();</span><br><span class="line">        <span class="type">String</span> <span class="variable">verificationCode</span> <span class="operator">=</span> (String) smsAuth.getCredentials();</span><br><span class="line">        <span class="keyword">if</span> (!smsAuthService.verifyCode(phoneNumber, verificationCode)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BadCredentialsException</span>(<span class="string">&quot;验证码错误或已过期&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">UserDetails</span> <span class="variable">smsCustomerDetails</span> <span class="operator">=</span> smsUserDetailsService.loadUserByUsername(phoneNumber);</span><br><span class="line">        <span class="type">SmsAuthenticationToken</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SmsAuthenticationToken</span>(</span><br><span class="line">                smsCustomerDetails,</span><br><span class="line">                <span class="literal">null</span>,</span><br><span class="line">                smsCustomerDetails.getAuthorities()</span><br><span class="line">        );</span><br><span class="line">        result.setDetails(smsAuth.getDetails());</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(<span class="meta">@NonNull</span> Class&lt;?&gt; authentication)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> SmsAuthenticationToken.class.isAssignableFrom(authentication);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>装配<code>SmsUserDetailsService</code>以进行数据库用户信息拉取，装配<code>SmsAuthService</code>以进行短信验证码核验。</p>
+<p><code>supports(@NonNull Class&lt;?&gt; authentication)</code>方法负责告诉Spring Security在接收到不同类型的<code>AuthenticationToken</code>时该使用哪个<code>AuthenticationTokenProvider</code>。我的<code>SmsAuthenticationProvider</code>只期望接取<code>SmsAuthenticationToken</code>，所以使用此方法将两者进行绑定。</p>
+<h1 id="AuthenticationManager"><a href="#AuthenticationManager" class="headerlink" title="AuthenticationManager"></a>AuthenticationManager</h1><blockquote>
+<p>这个Spring Security配置类用于注入你的<code>SmsAuthenticationProvider</code>。</p>
+<p>⚠️值得注意的时，在你决定注入自定义的<code>SmsAuthenticationProvider</code>后，若不进行人为干预，Spring Security默认提供的<code>DaoAuthenticationProvider</code>将会被禁用，若需要保留，则需要手动进行注入。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> top.whaleghost.appointmentsystem.web.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.ProviderManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.dao.DaoAuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.http.SessionCreationPolicy;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetailsService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.SecurityFilterChain;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.logout.LogoutHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.cors.CorsConfiguration;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.util.NetworkEnvUtil;</span><br><span class="line"><span class="keyword">import</span> top.whaleghost.appointmentsystem.web.filter.JwtAuthenticationFilter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="meta">@EnableMethodSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// existing code...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> AuthenticationProvider <span class="title function_">daoAuthenticationProvider</span><span class="params">(</span></span><br><span class="line"><span class="params">            <span class="meta">@Qualifier(&quot;normalUserDetailsService&quot;)</span> UserDetailsService normalUserDetailsService</span></span><br><span class="line"><span class="params">    )</span> &#123;</span><br><span class="line">        <span class="type">DaoAuthenticationProvider</span> <span class="variable">provider</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DaoAuthenticationProvider</span>(normalUserDetailsService);</span><br><span class="line">        provider.setPasswordEncoder(<span class="keyword">new</span> <span class="title class_">BCryptPasswordEncoder</span>());</span><br><span class="line">        <span class="keyword">return</span> provider;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> AuthenticationManager <span class="title function_">authenticationManager</span><span class="params">(</span></span><br><span class="line"><span class="params">            <span class="meta">@Qualifier(&quot;smsAuthenticationProvider&quot;)</span> AuthenticationProvider smsAuthenticationProvider,</span></span><br><span class="line"><span class="params">            <span class="meta">@Qualifier(&quot;daoAuthenticationProvider&quot;)</span> AuthenticationProvider daoAuthenticationProvider</span></span><br><span class="line"><span class="params">    )</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProviderManager</span>(</span><br><span class="line">                Arrays.asList(smsAuthenticationProvider, daoAuthenticationProvider)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// existing code...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于Spring Security中如何使用<code>DaoAuthenticationProvider</code>配合数据库中的账号密码进行登录教程诸多，本文章便不再进行<code>normalUserDetailsService</code>的讲解。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Spring Security中由<code>AuthenticationManager</code>对所有的<code>AuthenticationProvider</code>进行管理，接收到不同的<code>AuthenticationToken</code>时会依次调用每个<code>AuthenticationProvider</code>的<code>supports(@NonNull Class&lt;?&gt; authentication)</code>方法进行匹配，匹配成功后执行这个<code>AuthenticationProvider</code>的<code>authenticate(@NonNull Authentication authentication)</code>方法并传导至与数据库交互的<code>UserDetailsService</code>的<code>loadUserByUsername(@Nonnull String username)</code>方法，拉取数据库结果成功后再由<code>AuthenticationProvider</code>决定是否放行，最后返回包含所有信息的<code>Authentication</code>（注意抹除敏感字段如密码等）。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://www.khalifa7410.top/about/">whaleghost</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://khalifa7410.top/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/">https://khalifa7410.top/2026/04/06/Spring-Security下Dao与Sms共存的AuthenticationProvider设计/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://khalifa7410.top" target="_blank">whaleghostの小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spring-Security/">Spring Security</a></div><div class="post-share"><div class="social-share" data-image="https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计"><img class="cover" src="https://s1.imagehub.cc/images/2026/03/27/9b45da28f0429724b330624d6fc8249f.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">CPA-会计</div></div><div class="info-2"><div class="info-item-1">总览职业道德会计人员：  坚持诚信，守法奉公。 坚持准则，守则敬业。 坚持学习，守正创新。  中国注册会计师职业道德：  诚信。 客观公正。 独立性：鉴证业务的灵魂。 专业胜任能力和勤勉尽责。 保密。 良好职业行为。  职业职能会计是以货币为主要计量单位，运用专门的方法，核算和监督一个单位经济活动的一种经济管理工作。 会计核算与会计监督，两者相辅相成，会计核算职能是监督职能的基础，监督职能是核算职能的保障。 会计基本假设 做账时所需的合理设定。      假设 说明     会计主体（空间范围） 给谁做账、谁就是会计主体。法律主体（注册公司等）必然是会计主体，但会计主体不一定是法律主体。   持续经营（时间范围） 会计主体在可预见的将来会持续正常经营，不会停业，不会大规模削减业务。是会计分期的前提，若企业进入破产阶段应考虑破产假设。   会计分期 做账要分期，进而出现折旧、摊销等会计处理方法。   货币计量 以货币为主要计量单位去反映会计主体的生产经营活动。     会计基础 企业会计的确认、计量和报告应当以权责发生制为基础。      制度 权责发生制 收付实现制     说明...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">whaleghost</div><div class="author-info-description">Talk is cheap, show me the code.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/whaleghost"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/whaleghost" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1725346207@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/288520602" target="_blank" title=""><i class="fab fa-bilibili"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-weixin"></i></a><a class="social-icon" href="/about/" target="_blank" title=""><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">在PC端浏览以获得更佳体验。需要咨询C++项目经验的请加V: whaleghost。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-Security%E9%AA%8C%E8%AF%81%E6%8E%88%E6%9D%83%E8%B0%83%E7%94%A8%E9%93%BE"><span class="toc-number">1.</span> <span class="toc-text">Spring Security验证授权调用链</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SmsAuthService"><span class="toc-number">2.</span> <span class="toc-text">SmsAuthService</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SmsAuthenticationToken"><span class="toc-number">3.</span> <span class="toc-text">SmsAuthenticationToken</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SmsUserDetails"><span class="toc-number">4.</span> <span class="toc-text">SmsUserDetails</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SmsUserDetailsService"><span class="toc-number">5.</span> <span class="toc-text">SmsUserDetailsService</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SmsAuthenticationProvider"><span class="toc-number">6.</span> <span class="toc-text">SmsAuthenticationProvider</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AuthenticationManager"><span class="toc-number">7.</span> <span class="toc-text">AuthenticationManager</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/" title="Spring Security下整合多种登录方式设计"><img src="https://s1.imagehub.cc/images/2026/04/06/fd6b701c6e367d2129b556820938b96c.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring Security下整合多种登录方式设计"/></a><div class="content"><a class="title" href="/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/" title="Spring Security下整合多种登录方式设计">Spring Security下整合多种登录方式设计</a><time datetime="2026-04-06T02:46:33.000Z" title="发表于 2026-04-06 10:46:33">2026-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计"><img src="https://s1.imagehub.cc/images/2026/03/27/9b45da28f0429724b330624d6fc8249f.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CPA-会计"/></a><div class="content"><a class="title" href="/2026/03/27/CPA-%E4%BC%9A%E8%AE%A1/" title="CPA-会计">CPA-会计</a><time datetime="2026-03-27T05:19:22.000Z" title="发表于 2026-03-27 13:19:22">2026-03-27</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By whaleghost</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8666910369" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div> </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script>(() => {
+  const destroyAplayer = () => {
+    if (window.aplayers) {
+      for (let i = 0; i < window.aplayers.length; i++) {
+        if (!window.aplayers[i].options.fixed) {
+          window.aplayers[i].destroy()
+        }
+      }
+    }
+  }
+
+  const runMetingJS = () => {
+    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+  }
+
+  btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+  btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+})()</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
