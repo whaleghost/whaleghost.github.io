@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Spring Data JPA自动挡ORM杂谈</title>
+      <link href="/2026/04/10/Spring-Data-JPA%E8%87%AA%E5%8A%A8%E6%8C%A1ORM%E6%9D%82%E8%B0%88/"/>
+      <url>/2026/04/10/Spring-Data-JPA%E8%87%AA%E5%8A%A8%E6%8C%A1ORM%E6%9D%82%E8%B0%88/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring Security下整合多种登录方式设计</title>
       <link href="/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/"/>
       <url>/2026/04/06/Spring-Security%E4%B8%8BDao%E4%B8%8ESms%E5%85%B1%E5%AD%98%E7%9A%84AuthenticationProvider%E8%AE%BE%E8%AE%A1/</url>
