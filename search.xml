@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>PostgreSQL MVCC</title>
+      <link href="/2026/07/08/PostgreSQL-MVCC/"/>
+      <url>/2026/07/08/PostgreSQL-MVCC/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Multiversion-Concurrency-Control"><a href="#Multiversion-Concurrency-Control" class="headerlink" title="Multiversion Concurrency Control"></a>Multiversion Concurrency Control</h1><blockquote><p>This means that each SQL statement sees a snapshot of data (a database version) as it was some time ago, regardless of the current state of the underlying data. This prevents statements from viewing inconsistent data produced by concurrent transactions performing updates on the same data rows, providing transaction isolation for each database session.</p><p>——PostgreSQL 18.4 Documentation</p></blockquote><p>PostgreSQL的MVCC模型采用了数据快照机制，每一条SQL语句都有属于自己的一份数据快照，这无关乎底层数据真实情况，意味着PostgreSQL进行查询时不会读到其他事务未提交的脏数据（脏读）。由于快照机制存在的原因，数据库读写锁不会冲突，不存在等待写锁释放读锁获取的情况，性能会更可观，同时，PostgreSQL的数据库事务隔离级别也与标准数据库事务隔离级别有所不同。</p><h2 id="Transaction-Isolation-Levels"><a href="#Transaction-Isolation-Levels" class="headerlink" title="Transaction Isolation Levels"></a>Transaction Isolation Levels</h2><p>标准数据库事务隔离级别：</p><div class="table-container"><table><thead><tr><th>Isolation Level</th><th>Dirty Read</th><th>Nonrepeatable Read</th><th>Phantom Read</th><th>Serialization Anomaly</th></tr></thead><tbody><tr><td>Read uncommitted</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Read committed</td><td>✗</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Repeatable read</td><td>✗</td><td>✗</td><td>✅</td><td>✅</td></tr><tr><td>Serializable</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td></tr></tbody></table></div><p>PostgreSQL的数据库事务隔离级别：</p><div class="table-container"><table><thead><tr><th>Isolation Level</th><th>Dirty Read</th><th>Nonrepeatable Read</th><th>Phantom Read</th><th>Serialization Anomaly</th></tr></thead><tbody><tr><td>Read uncommitted</td><td>✗</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Read committed ( Default )</td><td>✗</td><td>✅</td><td>✅</td><td>✅</td></tr><tr><td>Repeatable read</td><td>✗</td><td>✗</td><td>✗</td><td>✅</td></tr><tr><td>Serializable</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td></tr></tbody></table></div><p>得益于快照机制，PostgreSQL的<code>Read uncommitted isolation level</code>不会产生脏读，<code>Repeatable read solation level</code>也不会产生幻读。</p><p>不难发现，标准数据库事务隔离级别有四级，但PostgreSQL的数据库事务隔离级别严格来讲只有三级，<code>Read uncommitted isolation level</code>与<code>Read committed isolation level</code>隔离级别的表现是相同的，但由于标准数据库事务四级隔离级别是业界规范，MVCC模型为适配标准数据库的四级隔离级别迫不得已保留了四级隔离级别，实际只有三级。</p><h3 id="Read-Committed-Isolation-Level"><a href="#Read-Committed-Isolation-Level" class="headerlink" title="Read Committed Isolation Level"></a>Read Committed Isolation Level</h3><blockquote><p>A SELECT query sees a snapshot of the database as of the instant the query begins to run.</p></blockquote><p>当执行<code>SELECT</code>读语句时，会在查询准备开始执行的瞬间获取数据库快照。因此在语句执行期间，其他事务未提交的数据或已提交的数据对此语句均不可见，值得注意的是：</p><ul><li>在同一事务内，<code>SELECT</code>语句可以读到此事务内其他语句执行的数据更改，即使这些更改仍未提交。</li><li>在同一事务内，两条<code>SELECT</code>语句读取结果也许不同，因为在第一条<code>SELECT</code>语句执行完毕之后第二条<code>SELECT</code>语句执行之前，可能会有其他并发事务提交了数据更改。</li></ul><p>当执行<code>UPDATE</code>、<code>DELETE</code>写语句时，它们在查找特定行阶段的表现与<code>SELECT</code>语句表现相同，在写操作执行前，会将快照与表数据比对</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PostgreSQL </tag>
+            
+            <tag> Database Transaction </tag>
+            
+            <tag> Concurrent Programming </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>丙午季夏磨心</title>
       <link href="/2026/07/02/%E4%B8%99%E5%8D%88%E5%AD%A3%E5%A4%8F%E7%A3%A8%E5%BF%83/"/>
       <url>/2026/07/02/%E4%B8%99%E5%8D%88%E5%AD%A3%E5%A4%8F%E7%A3%A8%E5%BF%83/</url>
@@ -75,6 +104,10 @@
             <tag> Spring Boot </tag>
             
             <tag> Spring Data JPA </tag>
+            
+            <tag> Database Transaction </tag>
+            
+            <tag> Concurrent Programming </tag>
             
         </tags>
       
