@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>会计分录</title>
+      <link href="/2026/07/16/%E4%BC%9A%E8%AE%A1%E5%88%86%E5%BD%95/"/>
+      <url>/2026/07/16/%E4%BC%9A%E8%AE%A1%E5%88%86%E5%BD%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="会计分录"><a href="#会计分录" class="headerlink" title="会计分录"></a>会计分录</h1><blockquote><p><code>借</code>、<code>贷</code>在会计分录中仅是表示<code>增加</code>、<code>减少</code>的符号。</p><script type="math/tex; mode=display">\left.\begin{array}{ll}    资产 = 负债 + 所有者权益\\    利润\subseteq所有者权益\\    利润 = 收入 - 费用\end{array}\right\}\implies资产 + 费用 = 负债 + 所有者权益 + 收入</script></blockquote><div class="table-container"><table><thead><tr><th>借方（资成费）</th><th>贷方（收负所）</th></tr></thead><tbody><tr><td>资产</td><td>负债</td></tr><tr><td>成本</td><td>收入</td></tr><tr><td>费用</td><td>所有者权益</td></tr><tr><td>作为借方时增加，作为贷方时减少</td><td>作为贷方时增加、作为借方时减少</td></tr></tbody></table></div><p>撰写会计分录时，分三步：</p><ol><li>定科目</li><li>定增减、定金额</li><li>定方向、写分录</li></ol><p>例：</p><ul><li><p>公司购入汽车一辆，价值100w元，用银行存款支付。</p><ol><li><p>固定资产（资产）</p><p>银行存款（资产）</p></li><li><p>买入固定资产，固定资产（资产）增加100w元</p><p>用银行存款支付，银行存款（资产）减少100w元</p></li><li><p>借：固定资产100w</p><p>贷：银行存款100w</p></li></ol></li><li><p>公司向银行借入期限3个月的借款60w元并存入银行。</p><ol><li><p>短期借款（负债）</p><p>银行存款（资产）</p></li><li><p>借入短期借款，短期借款（负债）增加60w元</p><p>借来的钱存入银行，银行存款（资产）增加60w元</p></li><li><p>借：银行存款60w</p><p>贷：短期借款60w</p></li></ol></li><li><p>公司收到投资者按合同交来的资本金42w元，存入银行。</p><ol><li><p>实收资本（所有者权益）</p><p>银行存款（资产）</p></li><li><p>投资者投入资本金，实收资本（所有者权益）增加42w元</p><p>资本金存入银行，银行存款（资产）增加42w元</p></li><li><p>借：银行存款42w</p><p>贷：实收资本42w</p></li></ol></li><li><p>公司卖出产品，收到200w元，存入银行。</p><ol><li><p>主营业务收入（收入）</p><p>银行存款（资产）</p></li><li><p>卖出产品收入增加，主营业务收入（收入）增加200w元</p><p>收入存入银行，银行存款（资产）增加200w元</p></li><li><p>借：银行存款200w</p><p>贷：主营业务收入200w</p></li></ol></li><li><p>公司为了卖出产品，打广告花费5w元，已用银行存款支付。</p><ol><li><p>销售费用（费用）</p><p>银行存款（资产）</p></li><li><p>打广告，销售费用（费用）增加5w元</p><p>用银行存款支付，银行存款（资产）减少5w元</p></li><li><p>借：销售费用5w</p><p>贷：银行存款5w</p></li></ol></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CPA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PostgreSQL MVCC</title>
       <link href="/2026/07/08/PostgreSQL-MVCC/"/>
       <url>/2026/07/08/PostgreSQL-MVCC/</url>
